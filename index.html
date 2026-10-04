@@ -72,7 +72,46 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line);color:var(--muted);f
   .frame{order:-1;width:200px}
   nav{gap:14px}
 }
-@media (prefers-reduced-motion: reduce){.frame i{animation:none}html{scroll-behavior:auto}}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
+@keyframes ring{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.22);opacity:0}}
+.intro>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) backwards}
+.intro>:nth-child(1){animation-delay:.05s}.intro>:nth-child(2){animation-delay:.18s}
+.intro>:nth-child(3){animation-delay:.3s}.intro>:nth-child(4){animation-delay:.42s}
+.frame{animation:pop .9s cubic-bezier(.2,.8,.2,1) .15s backwards}
+.frame::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--accent);pointer-events:none;animation:ring 3.2s ease-out 1.2s infinite}
+.bar{position:absolute;left:0;bottom:-1px;height:3px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.js .reveal:not(.in){opacity:0}
+.js .reveal.in{animation:rise .75s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards}
+.proj{transition:transform .25s ease}
+.proj h3{transition:color .25s ease}
+.proj.in:hover,.proj:hover{transform:translateX(8px)}
+.proj:hover h3{color:var(--accent)}
+.btn{transition:transform .2s ease,filter .2s ease}
+.btn:hover{transform:translateY(-3px)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:24px;background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:12px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.card.in:hover,.card:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(16,24,40,.12)}
+.card h3{margin:0}
+.years{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+.inst{margin:0;color:var(--muted)}
+.pill{margin-top:auto;display:inline-block;padding:4px 14px;border:1px solid var(--accent);border-radius:999px;font-size:14px;font-weight:500}
+h2.sub{margin-top:44px}
+@media (max-width:700px){.cards{grid-template-columns:1fr}}
+dd{display:flex;flex-wrap:wrap;gap:8px}
+dt{padding-top:5px}
+.chip{display:inline-block;padding:5px 14px;background:var(--surface);border:1px solid var(--line);border-radius:999px;font-size:15px;line-height:1.5;transition:transform .2s ease,background .2s ease,color .2s ease,border-color .2s ease}
+.chip:hover{transform:translateY(-3px) scale(1.05);background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+@keyframes chipIn{from{opacity:0;transform:translateY(14px) scale(.6)}to{opacity:1;transform:none}}
+.js dl:not(.in) .chip{opacity:0}
+.js dl.in .chip{animation:chipIn .55s cubic-bezier(.2,.9,.3,1.2) var(--c,0s) backwards}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal:not(.in){opacity:1}
+  .frame::after,.bar{display:none}
+  .js dl:not(.in) .chip{opacity:1}
+}
 </style>
 </head>
 <body>
@@ -87,13 +126,14 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line);color:var(--muted);f
       <a href="#contact">Contact</a>
     </nav>
   </div>
+  <div class="bar" id="bar"></div>
 </header>
 
 <main class="wrap">
   <div class="hero">
     <div class="intro">
       <h1>Abinisha P</h1>
-      <p class="role">Web developer | Python | MySQL | AI Projects </p>
+      <p class="role">Web developer</p>
       <p class="lede">I have a Master of Computer Applications from Pondicherry University. I build responsive web apps and AI projects, from a face recognition attendance system to a translator that works on text, speech and images. I am looking for an entry-level web or software developer role.</p>
       <div class="btns">
         <a class="btn main" href="#projects">See my projects</a>
@@ -140,37 +180,35 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line);color:var(--muted);f
   <section id="skills">
     <h2>Skills</h2>
     <dl>
-      <dt>Programming</dt><dd>Python, JavaScript (basic)</dd>
-      <dt>Web technologies</dt><dd>HTML, CSS, JavaScript</dd>
-      <dt>Database</dt><dd>MySQL</dd>
-      <dt>AI and data</dt><dd>OpenCV, face_recognition, Pandas, data visualisation</dd>
-      <dt>Tools</dt><dd>VS Code, Jupyter Notebook, Git, GitHub, Vercel</dd>
+      <dt>Programming</dt><dd><span class="chip" style="--c:0.25s">Python</span><span class="chip" style="--c:0.30s">JavaScript (basic)</span></dd>
+      <dt>Web technologies</dt><dd><span class="chip" style="--c:0.36s">HTML</span><span class="chip" style="--c:0.42s">CSS</span><span class="chip" style="--c:0.47s">JavaScript</span></dd>
+      <dt>Database</dt><dd><span class="chip" style="--c:0.53s">MySQL</span></dd>
+      <dt>AI and data</dt><dd><span class="chip" style="--c:0.58s">OpenCV</span><span class="chip" style="--c:0.64s">face_recognition</span><span class="chip" style="--c:0.69s">Pandas</span><span class="chip" style="--c:0.74s">data visualisation</span></dd>
+      <dt>Tools</dt><dd><span class="chip" style="--c:0.80s">VS Code</span><span class="chip" style="--c:0.85s">Jupyter Notebook</span><span class="chip" style="--c:0.91s">Git</span><span class="chip" style="--c:0.96s">GitHub</span><span class="chip" style="--c:1.02s">Vercel</span></dd>
     </dl>
   </section>
 
   <section id="education">
-    <div class="two">
-      <div>
-        <h2>Education</h2>
-        <div class="edu">
-          <h3>Master of Computer Applications</h3>
-          <p>Pondicherry University, Karaikal Campus</p>
-          <p class="meta">2024 to 2026, CGPA 6.92</p>
-        </div>
-        <div class="edu">
-          <h3>Bachelor of Computer Science</h3>
-          <p>Avvaiyar Government College for Women, Karaikal</p>
-          <p class="meta">2021 to 2024, CGPA 7.37</p>
-        </div>
-      </div>
-      <div>
-        <h2>Certifications</h2>
-        <ul>
-          <li>IoT Foundation Course, NASSCOM</li>
-          <li>Foundation of Cloud IoT Edge ML, NPTEL</li>
-        </ul>
-      </div>
+    <h2>Education</h2>
+    <div class="cards">
+      <article class="card">
+        <span class="years">2024 to 2026</span>
+        <h3>Master of Computer Applications</h3>
+        <p class="inst">Pondicherry University, Karaikal Campus</p>
+        <span class="pill">CGPA 6.92</span>
+      </article>
+      <article class="card">
+        <span class="years">2021 to 2024</span>
+        <h3>Bachelor of Computer Science</h3>
+        <p class="inst">Avvaiyar Government College for Women, Karaikal</p>
+        <span class="pill">CGPA 7.37</span>
+      </article>
     </div>
+    <h2 class="sub">Certifications</h2>
+    <ul>
+      <li>IoT Foundation Course, NASSCOM</li>
+      <li>Foundation of Cloud IoT Edge ML, NPTEL</li>
+    </ul>
   </section>
 
   <section id="contact" class="contact">
@@ -184,5 +222,30 @@ footer{padding:32px 0 48px;border-top:1px solid var(--line);color:var(--muted);f
 <footer>
   <div class="wrap">Abinisha P, Karaikal, Puducherry</div>
 </footer>
+<script>
+(function(){
+  var d=document.documentElement;
+  d.classList.add('js');
+  var sel='section h2,section>h3,section>.meta,section>ul,section>dl,section>p,.proj,.card';
+  var els=[].slice.call(document.querySelectorAll(sel));
+  els.forEach(function(el,i){
+    el.classList.add('reveal');
+    var sibs=[].slice.call(el.parentNode.children);
+    el.style.setProperty('--d',(Math.min(sibs.indexOf(el),5)*0.08)+'s');
+  });
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{els.forEach(function(el){el.classList.add('in');});}
+  var bar=document.getElementById('bar');
+  function prog(){
+    var h=d.scrollHeight-d.clientHeight;
+    bar.style.transform='scaleX('+(h>0?Math.min(d.scrollTop/h,1):0)+')';
+  }
+  window.addEventListener('scroll',prog,{passive:true});prog();
+})();
+</script>
 </body>
 </html>
